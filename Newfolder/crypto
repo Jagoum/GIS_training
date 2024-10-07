@@ -1,0 +1,13 @@
+```function atbast (plaintext , shift) returns string
+    alphabet = [ABCDEFGHIJKLMNOPQRSTUVWXYZ]
+    reverse =  [ZYXWVUTSRQPONMLKJIHGFEDCBA]
+    result = ''
+    for letters in plaintext
+        if letter in alphabet   then
+            new_pos = ( alphabet.index(letter) + shift )MOD26
+            result = reverse[new_pos]
+        endif
+    enfor
+    return result
+end function```
+        
