@@ -1,0 +1,39 @@
+#!/bin/bash
+#find the  greatest commond divisor of two numbers
+function(interger num1, interger num2){ returns interger
+
+#steps to follow
+#begin with a pair of non negative interger 
+# if one of the two is 0  then greatest commond divisor is the non-zero value
+#otherwise apply the division of two numbers ie m = nq + r where r is the remainder and q is the qoutient.
+# where 0<=r<n
+#replace the pair of (m,n) with (n,r)
+#continue untill you have the remainder as 0
+if num1=0 AND num2!=0 then
+        return  num2
+else if num1!=0 AND num2=0 then
+        return num1
+else ifnum1=0 AND num2=0 then
+        return 0
+else
+do {
+  if (num1 > num2) then
+    r = num1 % num2
+    num1 = num2
+    num2 = r
+    if(r=0)
+	return num2
+	break
+    end if
+  else 
+     r = num2 % num1
+    num2 = num1
+    num1 = r
+    if (r=0)
+	return num1
+    end if     
+  end if
+} while (r != 0)
+end while
+end if
+
