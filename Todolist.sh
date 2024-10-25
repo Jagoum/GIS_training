@@ -1,3 +1,4 @@
+```
 #!/bin/bash
 echo "Welcome to To this task manager"
 usage() {
@@ -21,7 +22,7 @@ todo() {
         echo $task >>file.txt
         count=$(cat -n file.txt | wc -l)
         echo $count $task
-        echo "Created $count at $(date)" >>tasklog.txt
+        echo "Created $count $task at $(date)" >> tasklog.txt
         cat tasklog.txt
         echo "Enter r to return : "
         read r
@@ -42,14 +43,15 @@ todo() {
         read -p "Do you want do sustitude a task or delete it? [sub/del] : " ques
         case $ques in
         sub)
+            cat -n file.txt
             read -p "Enter the task number : " id
             # read -p "Enter the name you to substitude with: " name
-            read -p "Enter the task you want to modify or update : " oldtask
+            # read -p "Enter the task you want to modify or update : " oldtask
             # cat -n file.txt > temp.txt
             read -p "Enter the new task : " newtask
             # hold=$(grep -e "^${id}" | cat file.txt | sed -i "/${id}/s/newtask" file.txt)
             #read -p "Enter the new name you wish to substitude with: " newname
-            sed -i "$id s/$oldtask/$newtask/" file.txt
+            sed -i "${id}s/.*/$newtask/" file.txt
 
             read -p "Enter r to return : " r
             if [ "$r" = 'r' ]; then
@@ -60,8 +62,9 @@ todo() {
         del)
             read -p "To delete a line enter enter l, to delete a text enter t : " l
             if [ "$l" = 'l' ]; then
+                cat -n file.txt
                 read -p "Enter line number : " lnum
-                sed -i "$lnum"d file.txt
+                sed -i "${lnum}"d file.txt
                 cat -n file.txt
                 read -p "Enter r to return home : " r
                 if [ "$r" = 'r' ]; then
@@ -121,3 +124,4 @@ todo() {
     esac
 }
 todo
+```
