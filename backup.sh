@@ -12,10 +12,10 @@ echo ""
 echo "backup /home/user/ /Newfolder "
 backup() {
     if [ $# -eq 2 ]; then
-        if [[ -d $1 ]]; then
+        if [[ -d $1 ]] || [[ -f $1 ]]; then
         # mkdir $2_backup
         tar czvf $2_backup.tar.gz $1
-        cp -r $1 $2_backup
+        cp -r $2_backup.tar.gz $2_backup
         fi
     fi
         
