@@ -54,7 +54,7 @@ celebrating() {
             echo -e "May you give your best in this new year\n and never you give up before the adversaries of life\n because your defenfer and strengthener is there to give you a hand of help. "
             echo -e "God Bless you $name. Remain Blessed in Jesus' mighty name i pray\n"
             echo ""
-            echo -e "\t\t\t           AMEN             \n"
+            echo -e "\t\t\t           AMEN             \n\n"
         ;;
         *)
             echo "Please enter one of the above options"

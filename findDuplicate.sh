@@ -2,76 +2,46 @@
 #This program is to find the duplicate files in directory and display them  to the user.
 #This is also need to take some certain parameters such as directory and evaluate that the dir entered is correct.
 
-manaully () {
-    dir=$1
-    option=
-    # this function is to check for duplicate files in a directory manually without using already defined tools like fdupes
-    for i in $(ls $dir);do
-        if [ -f $i ]; then
-            md5sum $i
-            
-            var=$((ls $dir | xargs diff $i))
-             
-            if [ var  = "" ]; then
-                echo "Duplicates found!"
-                ls -s $i 
-                
-            else
-                echo "No duplicate found!"
-            fi
+if [[ $# -eq 1 ]]; then
+    case $1 in
+    --help | -H)
+        help
+        ;;
+    *)
+        if [[ -d $1 ]]; then
+            echo -e "\t\t\tDuplicates found \n"
+            find $1 -maxdepth 1 ! -empty -type f -exec md5sum {} + | sort | uniq -w32 -dD | cut -d" " -f 3
+        else
+            echo -e "\t\t\tInvalid Directory !!\n\n"
         fi
-    done
-
-} 
-help() {
-    echo -e "(FINDDUPES)\t\tWelcome to this help manaul\t\t(1)\n\n\nUse the -h or --help flag to display this menu\n\nUse the -d flag to delete one of the files\n\nUse the -D to delete both files"
-}
-
-Options() {
-    echo "For more options on how to use this program use -h or --h else q to quit"
-    
-}
-
-
-
-    
-findDuplicate() {
-    if [ $# -gt 0 ];then
-
-            if [ -d $dir ]; then
-                echo "Valid directory"
-                fdupes $dir
-                Options 
-            else 
-                echo "Path to directory provided is invalid"
-                Options
-            fi
-    fi
-}
-findDuplicate
-while true;do
-    findDuplicate
-    read option
-    case $option in 
-        -h|--help)
-           help
-           break
         ;;
-        -d)
-            fdupes -Nd $dir
-            break
-        ;;
-        -D)
-            fdupes -rd $dir
-            break
-        ;;
-        q)
-            break
-        ;; 
-        *)
-            echo "Please enter one of the options above"
-            help
-            break
-        ;;
+
     esac
-done
+
+elif [ $# -eq 2 ]; then
+
+    case $1 in
+    --fix | -F)
+        if [[ -d $2 ]]; then
+            echo -e "\t\t\tDuplicates found \n"
+            find $2 -maxdepth 1 ! -empty -type f -exec md5sum {} + | sort | uniq -w32 -dD | cut -d" " -f 3
+            fdupes -Nd $2
+        else
+            echo -e "\t\t\tInvalid Directory !!\n\n"
+        fi
+        ;;
+    --help | -H)
+        help
+        ;;
+
+    esac
+
+else
+    find . -maxdepth 1 ! -empty -type f -exec md5sum {} + | sort | uniq -w32 -dD | cut -d" " -f 3
+
+fi
+
+help() {
+    echo -e "(FINDDUPES)\t\tWelcome to this help manaul\t\t(1)\n\n\nUse the -H or --help flag to display this menu\n\nUse the -fix or -F flag to delete one of the duplicate files\n\nUse the -D to delete both files"
+
+}
